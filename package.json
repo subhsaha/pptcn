@@ -1,6 +1,6 @@
 {
   "name": "pptcn",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Beautiful, composable PowerPoint components for code and AI agents.",
   "keywords": [
     "powerpoint",
