@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "pptcn",
+  "homepage": "https://github.com/subhsaha/pptcn",
+  "items": [
+    {
+      "name": "title-slide",
+      "type": "registry:component",
+      "title": "title-slide",
+      "description": "A strong, typographic opening slide."
+    },
+    {
+      "name": "metric-card",
+      "type": "registry:component",
+      "title": "metric-card",
+      "description": "A focused slide for one headline metric."
+    },
+    {
+      "name": "metric-grid",
+      "type": "registry:component",
+      "title": "metric-grid",
+      "description": "A balanced grid for two to eight business metrics."
+    },
+    {
+      "name": "comparison-slide",
+      "type": "registry:component",
+      "title": "comparison-slide",
+      "description": "A clear two-column decision or tradeoff slide."
+    }
+  ]
+}
