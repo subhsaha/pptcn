@@ -110,22 +110,22 @@ const deck = createPresentation({ theme });
 
 ## Source-owned registry
 
-The repository builds shadcn-compatible registry items into `public/r`. When these files are hosted, install a component with the shadcn CLI:
+The repository builds shadcn-compatible registry items into `public/r`. The documentation site publishes these files as live install endpoints:
 
 ```bash
-npx shadcn@latest add https://raw.githubusercontent.com/subhsaha/pptcn/main/public/r/metric-grid.json
+npx shadcn@latest add https://subhsaha.github.io/pptcn/r/metric-grid.json
 ```
 
 For the chart-and-explanation slide:
 
 ```bash
-npx shadcn@latest add https://raw.githubusercontent.com/subhsaha/pptcn/main/public/r/chart-slide.json
+npx shadcn@latest add https://subhsaha.github.io/pptcn/r/chart-slide.json
 ```
 
 And the table with semantic monochrome badges:
 
 ```bash
-npx shadcn@latest add https://raw.githubusercontent.com/subhsaha/pptcn/main/public/r/data-table-slide.json
+npx shadcn@latest add https://subhsaha.github.io/pptcn/r/data-table-slide.json
 ```
 
 The registry item copies the component and its small runtime into your repository, so you can change every layout and design decision. Run `npm run registry:build` after modifying registry source files.

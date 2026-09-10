@@ -1,10 +1,13 @@
-name: Publish component registry
+name: Publish docs and component registry
 
 on:
   push:
     branches: [main]
     paths:
       - "public/r/**"
+      - "site/**"
+      - "docs/previews/**"
+      - "examples/financial-summary.pptx"
       - "registry.json"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
@@ -27,8 +30,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Assemble static site
+        run: |
+          mkdir -p _site/r _site/assets
+          cp site/index.html site/styles.css _site/
+          cp public/r/*.json _site/r/
+          cp docs/previews/*.png _site/assets/
+          cp examples/financial-summary.pptx _site/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: public
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4

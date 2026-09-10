@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Composable, source-owned PowerPoint components for TypeScript and AI agents." />
+    <title>pptcn — PowerPoint components for code</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="nav shell">
+      <a class="brand" href="./" aria-label="pptcn home"><span class="mark">P</span> pptcn</a>
+      <nav aria-label="Primary navigation">
+        <a href="#components">Components</a>
+        <a href="#install">Install</a>
+        <a href="https://github.com/subhsaha/pptcn">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero shell">
+        <div class="eyebrow">PowerPoint components for code and AI agents</div>
+        <h1>Build presentations<br />that still feel designed.</h1>
+        <p class="lede">Composable TypeScript components with monochrome defaults, editable PowerPoint output, and source-owned shadcn installation.</p>
+        <div class="actions">
+          <a class="button primary" href="#install">Get started</a>
+          <a class="button" href="./financial-summary.pptx" download>Download sample <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="install-line"><code>npm install pptcn</code><button data-copy="npm install pptcn" aria-label="Copy npm install command">Copy</button></div>
+      </section>
+
+      <section class="showcase shell" aria-labelledby="showcase-title">
+        <div class="section-heading">
+          <div><span class="index">01</span><h2 id="showcase-title">A financial report, not a template.</h2></div>
+          <p>Charts remain native and editable. Tables, badges, text, and panels are ordinary PowerPoint objects.</p>
+        </div>
+        <figure class="deck-frame hero-frame">
+          <img src="./assets/financial-summary.png" alt="Monochrome FY2026 financial summary slide with four KPI cards" />
+        </figure>
+        <div class="split-previews">
+          <figure class="deck-frame">
+            <img src="./assets/revenue-growth.png" alt="Revenue growth bar chart with an explanation panel on the right" />
+            <figcaption><span>Editable chart</span><span>Revenue growth</span></figcaption>
+          </figure>
+          <figure class="deck-frame">
+            <img src="./assets/margin-expansion.png" alt="Margin expansion line chart with an explanation panel on the right" />
+            <figcaption><span>Editable chart</span><span>Margin expansion</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="components" class="components shell" aria-labelledby="components-title">
+        <div class="section-heading">
+          <div><span class="index">02</span><h2 id="components-title">Small set. Complete reports.</h2></div>
+          <p>Six focused components cover the common structure of a business presentation without hiding PowerPoint behind a design tool.</p>
+        </div>
+        <div class="component-grid">
+          <article><span>01</span><h3>TitleSlide</h3><p>Open with one clear idea.</p></article>
+          <article><span>02</span><h3>MetricCard</h3><p>Give one number the room it needs.</p></article>
+          <article><span>03</span><h3>MetricGrid</h3><p>Compare two to eight KPIs.</p></article>
+          <article><span>04</span><h3>ComparisonSlide</h3><p>Make a two-sided decision legible.</p></article>
+          <article><span>05</span><h3>ChartSlide</h3><p>Pair an editable chart with the explanation.</p></article>
+          <article><span>06</span><h3>DataTableSlide</h3><p>Show tabular detail with solid, muted, and outline badges.</p></article>
+        </div>
+      </section>
+
+      <section id="install" class="install shell" aria-labelledby="install-title">
+        <div class="section-heading">
+          <div><span class="index">03</span><h2 id="install-title">Install the package—or own the source.</h2></div>
+          <p>Use npm for the compact API. Use the shadcn registry when you want every layout decision copied into your project.</p>
+        </div>
+        <div class="install-grid">
+          <article>
+            <div class="label">Package</div>
+            <h3>Start in one line.</h3>
+            <div class="code-block"><code>npm install pptcn</code><button data-copy="npm install pptcn">Copy</button></div>
+            <p>Then import components from <code>pptcn</code> and write an ordinary <code>.pptx</code> file.</p>
+          </article>
+          <article>
+            <div class="label">Source-owned</div>
+            <h3>Add only what you need.</h3>
+            <div class="code-block wrap"><code>npx shadcn@latest add https://subhsaha.github.io/pptcn/r/chart-slide.json</code><button data-copy="npx shadcn@latest add https://subhsaha.github.io/pptcn/r/chart-slide.json">Copy</button></div>
+            <p>Replace <code>chart-slide</code> with <code>data-table-slide</code>, <code>metric-grid</code>, or another component.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="proof shell">
+        <div><strong>6</strong><span>components</span></div>
+        <div><strong>2</strong><span>native chart types</span></div>
+        <div><strong>3</strong><span>badge styles</span></div>
+        <div><strong>100%</strong><span>editable output</span></div>
+      </section>
+    </main>
+
+    <footer class="footer shell">
+      <p>Inspired by <a href="https://github.com/shadcn-labs/pdfcn">pdfcn</a> from shadcn labs. PowerPoint generation by <a href="https://github.com/gitbrent/PptxGenJS">PptxGenJS</a>.</p>
+      <p>Independent, open source, and MIT licensed.</p>
+    </footer>
+
+    <script>
+      document.querySelectorAll("[data-copy]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          await navigator.clipboard.writeText(button.dataset.copy);
+          const label = button.textContent;
+          button.textContent = "Copied";
+          setTimeout(() => { button.textContent = label; }, 1200);
+        });
+      });
+    </script>
+  </body>
+</html>
