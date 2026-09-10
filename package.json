@@ -1,0 +1,61 @@
+{
+  "name": "pptcn",
+  "version": "0.1.0",
+  "description": "Beautiful, composable PowerPoint components for code and AI agents.",
+  "keywords": [
+    "powerpoint",
+    "pptx",
+    "presentation",
+    "pptxgenjs",
+    "shadcn"
+  ],
+  "license": "MIT",
+  "author": "Subhasaha",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "public/r",
+    "registry.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && npm run registry:build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "example": "tsx examples/basic-deck.ts",
+    "check": "npm run typecheck && npm test && npm run build && npm run example",
+    "registry:build": "node scripts/build-registry.mjs",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "pptxgenjs": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.1",
+    "@vitest/coverage-v8": "^4.0.5",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.5"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/subhsaha/pptcn.git"
+  },
+  "bugs": {
+    "url": "https://github.com/subhsaha/pptcn/issues"
+  },
+  "homepage": "https://subhsaha.github.io/pptcn/"
+}
