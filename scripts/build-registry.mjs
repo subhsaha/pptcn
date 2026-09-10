@@ -18,6 +18,8 @@ const items = [
   { name: "metric-card", description: "A focused slide for one headline metric.", component: "src/components/metric-card.ts" },
   { name: "metric-grid", description: "A balanced grid for two to eight business metrics.", component: "src/components/metric-grid.ts", extras: ["src/components/metric-card.ts"] },
   { name: "comparison-slide", description: "A clear two-column decision or tradeoff slide.", component: "src/components/comparison-slide.ts" },
+  { name: "chart-slide", description: "An editable native chart with a right-side explanation panel.", component: "src/components/chart-slide.ts" },
+  { name: "data-table-slide", description: "An editable monochrome data table with semantic status badges.", component: "src/components/data-table-slide.ts" },
 ];
 
 await mkdir(resolve("public/r"), { recursive: true });

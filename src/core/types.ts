@@ -44,7 +44,25 @@ export interface ShapeElement extends Bounds {
   strokeWidth?: number;
 }
 
-export type SlideElement = TextElement | ShapeElement;
+export type ChartKind = "bar" | "line";
+
+export interface ChartSeries {
+  name: string;
+  values: number[];
+}
+
+export interface ChartElement extends Bounds {
+  type: "chart";
+  chart: ChartKind;
+  categories: string[];
+  series: ChartSeries[];
+  colors: HexColor[];
+  showValues?: boolean;
+  valueFormat?: string;
+  altText: string;
+}
+
+export type SlideElement = TextElement | ShapeElement | ChartElement;
 
 export type WarningType = "text-overflow" | "content-truncated" | "layout-overflow";
 

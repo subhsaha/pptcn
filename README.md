@@ -6,6 +6,16 @@ Beautiful, composable PowerPoint components for code and AI agents.
 
 Every title, metric, bullet, and panel is a native PowerPoint object. The output is an ordinary `.pptx` file that remains editable in PowerPoint, Keynote, and compatible office suites.
 
+## Preview
+
+![Monochrome financial summary slide](docs/previews/financial-summary.png)
+
+![Editable revenue chart with a right-side explanation](docs/previews/revenue-growth.png)
+
+![Editable margin chart with a right-side explanation](docs/previews/margin-expansion.png)
+
+[Download the complete editable financial-summary deck](examples/financial-summary.pptx).
+
 ## Why pptcn
 
 - Semantic APIs: describe the slide, not its coordinates.
@@ -17,16 +27,16 @@ Every title, metric, bullet, and panel is a native PowerPoint object. The output
 
 ## Install
 
-Until the first npm release, install directly from GitHub:
-
-```bash
-npm install github:subhsaha/pptcn
-```
-
-After publication, the equivalent command will be:
+Install the small, stable package from npm:
 
 ```bash
 npm install pptcn
+```
+
+Or install the latest source directly from GitHub:
+
+```bash
+npm install github:subhsaha/pptcn
 ```
 
 Node.js 20 or newer is required.
@@ -36,6 +46,7 @@ Node.js 20 or newer is required.
 ```ts
 import {
   ComparisonSlide,
+  ChartSlide,
   MetricGrid,
   TitleSlide,
   createPresentation,
@@ -78,6 +89,8 @@ Long content is constrained deterministically. Inspect `deck.warnings` after add
 | `MetricCard` | Giving a single metric the whole slide |
 | `MetricGrid` | Comparing two to eight business metrics |
 | `ComparisonSlide` | Explaining a two-sided choice or tradeoff |
+| `ChartSlide` | Pairing an editable native chart with a right-side explanation |
+| `DataTableSlide` | Showing editable tabular detail with monochrome status badges |
 
 All components accept semantic content and return a `SlideComponent`. Pass that component to `deck.add(...)`; no PowerPoint coordinates are needed.
 
@@ -103,6 +116,18 @@ The repository builds shadcn-compatible registry items into `public/r`. When the
 npx shadcn@latest add https://raw.githubusercontent.com/subhsaha/pptcn/main/public/r/metric-grid.json
 ```
 
+For the chart-and-explanation slide:
+
+```bash
+npx shadcn@latest add https://raw.githubusercontent.com/subhsaha/pptcn/main/public/r/chart-slide.json
+```
+
+And the table with semantic monochrome badges:
+
+```bash
+npx shadcn@latest add https://raw.githubusercontent.com/subhsaha/pptcn/main/public/r/data-table-slide.json
+```
+
 The registry item copies the component and its small runtime into your repository, so you can change every layout and design decision. Run `npm run registry:build` after modifying registry source files.
 
 ## Local development
@@ -112,7 +137,7 @@ npm install
 npm run check
 ```
 
-`npm run example` creates `output/demo.pptx`, containing a title slide, metric grid, and comparison slide.
+`npm run example` creates `output/demo.pptx`, containing a title slide, financial summary, and two editable chart-and-insight slides.
 
 ## Credit
 

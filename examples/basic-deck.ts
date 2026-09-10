@@ -1,48 +1,91 @@
-import { ComparisonSlide, MetricGrid, TitleSlide, createPresentation } from "../src/index.js";
+import { ChartSlide, DataTableSlide, MetricGrid, TitleSlide, createPresentation } from "../src/index.js";
 
 const deck = createPresentation({
   author: "pptcn",
-  title: "Q3 Business Review",
+  title: "FY2026 Financial Summary",
   subject: "Editable presentation generated with pptcn",
 });
 
 deck.add(TitleSlide({
   eyebrow: "Quarterly review",
-  title: "Building durable growth",
-  subtitle: "Q3 performance, customer signals, and the decisions that shape our next quarter.",
-  author: "Strategy & Operations",
-  date: "September 2026",
+  title: "Profitable growth, by design",
+  subtitle: "FY2026 financial summary, operating leverage, and the decisions behind the numbers.",
+  author: "Finance & Strategy",
+  date: "FY2026",
 }));
 
 deck.add(MetricGrid({
   eyebrow: "Performance",
-  title: "Momentum across the business",
+  title: "Financial performance at a glance",
   metrics: [
-    { label: "Annual recurring revenue", value: "$42.8M", change: "+18.4% YoY", trend: "up", description: "Ahead of the operating plan" },
-    { label: "Net revenue retention", value: "118%", change: "+6 pts", trend: "up", description: "Expansion led by enterprise" },
-    { label: "Gross margin", value: "76%", change: "+2.1 pts", trend: "up", description: "Infrastructure efficiency" },
-    { label: "Sales cycle", value: "47 days", change: "−8 days", trend: "up", description: "Faster proof-to-production" },
+    { label: "Revenue", value: "$42.8M", change: "+18.4% YoY", trend: "up", description: "$1.8M ahead of plan" },
+    { label: "Gross profit", value: "$32.5M", change: "+22.1% YoY", trend: "up", description: "76% gross margin" },
+    { label: "Operating income", value: "$6.4M", change: "+$4.2M", trend: "up", description: "15% operating margin" },
+    { label: "Free cash flow", value: "$7.1M", change: "+68% YoY", trend: "up", description: "111% cash conversion" },
   ],
-  footer: "Source: Finance and Revenue Operations · Q3 close",
+  footer: "Source: Finance · FY2026 management accounts · USD",
 }));
 
-deck.add(ComparisonSlide({
-  eyebrow: "Decision",
-  title: "Build the platform, buy the commodity",
-  left: {
-    title: "Build in-house",
-    subtitle: "Where differentiation compounds",
-    accent: "primary",
-    points: ["Own the customer workflow", "Tune deeply to proprietary data", "Create durable product leverage", "Accept higher near-term investment"],
+deck.add(ChartSlide({
+  eyebrow: "Growth",
+  title: "Revenue accelerated through the year",
+  chart: {
+    type: "bar",
+    categories: ["Q1", "Q2", "Q3", "Q4"],
+    series: [{ name: "Revenue ($M)", values: [8.9, 10.1, 11.2, 12.6] }],
+    showValues: true,
+    valueFormat: "$0.0",
+    altText: "Quarterly revenue rose from 8.9 million dollars in Q1 to 12.6 million dollars in Q4.",
   },
-  right: {
-    title: "Partner",
-    subtitle: "Where speed matters more than ownership",
-    accent: "muted",
-    points: ["Launch with proven infrastructure", "Reduce maintenance burden", "Preserve focus for core product", "Manage vendor concentration risk"],
+  insight: {
+    title: "The exit rate matters",
+    summary: "Q4 revenue was 42% above Q1, giving the business a stronger base for the next fiscal year.",
+    points: ["Enterprise expansion drove 61% of growth", "No quarter relied on one-time revenue", "Q4 finished 6% above plan"],
   },
-  footer: "Recommendation: invest engineering time only where it changes the customer outcome",
+  footer: "Quarterly revenue · USD millions",
+  speakerNotes: "Emphasize the sequential acceleration and the quality of recurring growth.",
 }));
 
-await deck.write("output/demo.pptx");
-console.log(`Created output/demo.pptx with ${deck.slides.length} editable slides.`);
+deck.add(DataTableSlide({
+  eyebrow: "Detail",
+  title: "Quarterly operating summary",
+  columns: [
+    { key: "quarter", label: "Quarter", width: 1 },
+    { key: "revenue", label: "Revenue", align: "right" },
+    { key: "grossMargin", label: "Gross margin", align: "right" },
+    { key: "operatingMargin", label: "Operating margin", align: "right" },
+    { key: "status", label: "Vs plan", align: "center" },
+  ],
+  rows: [
+    { quarter: "Q1", revenue: "$8.9M", grossMargin: "72%", operatingMargin: "8%", status: { label: "On plan", badge: "outline" } },
+    { quarter: "Q2", revenue: "$10.1M", grossMargin: "74%", operatingMargin: "11%", status: { label: "Ahead", badge: "muted" } },
+    { quarter: "Q3", revenue: "$11.2M", grossMargin: "75%", operatingMargin: "14%", status: { label: "Ahead", badge: "muted" } },
+    { quarter: "Q4", revenue: "$12.6M", grossMargin: "78%", operatingMargin: "19%", status: { label: "Beat", badge: "solid" } },
+  ],
+  footer: "Management accounts · USD millions",
+}));
+
+deck.add(ChartSlide({
+  eyebrow: "Efficiency",
+  title: "Margins expanded while investment continued",
+  chart: {
+    type: "line",
+    categories: ["Q1", "Q2", "Q3", "Q4"],
+    series: [
+      { name: "Gross margin", values: [72, 74, 75, 78] },
+      { name: "Operating margin", values: [8, 11, 14, 19] },
+    ],
+    valueFormat: "0%",
+    altText: "Gross margin increased from 72 to 78 percent and operating margin increased from 8 to 19 percent.",
+  },
+  insight: {
+    title: "Scale is converting",
+    summary: "Product and infrastructure leverage funded continued go-to-market investment without sacrificing profitability.",
+    points: ["Gross margin gained 6 points", "Operating margin more than doubled", "Hiring remained within plan"],
+  },
+  footer: "Margins shown as percent of revenue",
+}));
+
+const output = process.env.PPTCN_OUTPUT ?? "output/demo.pptx";
+await deck.write(output);
+console.log(`Created ${output} with ${deck.slides.length} editable slides.`);

@@ -10,6 +10,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Generate editable PowerPoint decks from semantic TypeScript components.
 - Compose title, metric card, metric grid, and two-sided comparison slides.
+- Pair editable bar and line charts with a concise right-side explanation panel.
+- Present financial detail in editable tables with solid, muted, and outline badges.
 - Customize consistent typography, colors, and spacing with theme tokens.
 - Install as a package or copy source-owned components from a shadcn-compatible registry.
 - Validate layout bounds, report constrained content, and verify releases with tests and CI.
+- Preview a monochrome financial-summary deck in the project documentation.
+
+### Credit
+
+- Inspired by [pdfcn](https://github.com/shadcn-labs/pdfcn) and powered by [PptxGenJS](https://github.com/gitbrent/PptxGenJS).

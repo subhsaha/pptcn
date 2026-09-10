@@ -1,5 +1,5 @@
 import PptxGenJS from "pptxgenjs";
-import type { ShapeElement, ShapeKind, SlideDefinition, TextElement } from "./types.js";
+import type { ChartElement, ShapeElement, ShapeKind, SlideDefinition, TextElement } from "./types.js";
 
 const shapeMap: Record<ShapeKind, PptxGenJS.ShapeType> = {
   rectangle: "rect" as PptxGenJS.ShapeType,
@@ -41,11 +41,39 @@ function renderShape(slide: PptxGenJS.Slide, element: ShapeElement): void {
   });
 }
 
+function renderChart(slide: PptxGenJS.Slide, element: ChartElement): void {
+  slide.addChart(
+    element.chart,
+    element.series.map((series) => ({ name: series.name, labels: element.categories, values: series.values })),
+    {
+      x: element.x,
+      y: element.y,
+      w: element.width,
+      h: element.height,
+      chartColors: element.colors,
+      showLegend: element.series.length > 1,
+      legendPos: "b",
+      showValue: element.showValues ?? false,
+      ...(element.valueFormat !== undefined && { dataLabelFormatCode: element.valueFormat }),
+      valGridLine: { color: "E5E5E5" },
+      showTitle: false,
+      ...(element.valueFormat !== undefined && { valAxisLabelFormatCode: element.valueFormat }),
+      lineDataSymbol: "circle",
+      lineSize: 2.5,
+      catAxisLabelFontFace: "Aptos",
+      valAxisLabelFontFace: "Aptos",
+      altText: element.altText,
+    },
+  );
+}
+
 export function renderSlide(presentation: PptxGenJS, definition: SlideDefinition): void {
   const slide = presentation.addSlide();
   slide.background = { color: definition.background };
   for (const element of definition.elements) {
     if (element.type === "text") renderText(slide, element);
-    else renderShape(slide, element);
+    else if (element.type === "shape") renderShape(slide, element);
+    else renderChart(slide, element);
   }
+  if (definition.speakerNotes) slide.addNotes(definition.speakerNotes);
 }

@@ -26,6 +26,18 @@
       "type": "registry:component",
       "title": "comparison-slide",
       "description": "A clear two-column decision or tradeoff slide."
+    },
+    {
+      "name": "chart-slide",
+      "type": "registry:component",
+      "title": "chart-slide",
+      "description": "An editable native chart with a right-side explanation panel."
+    },
+    {
+      "name": "data-table-slide",
+      "type": "registry:component",
+      "title": "data-table-slide",
+      "description": "An editable monochrome data table with semantic status badges."
     }
   ]
 }

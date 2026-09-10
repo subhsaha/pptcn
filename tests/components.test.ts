@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ComparisonSlide, MetricCard, MetricGrid, TitleSlide, WIDESCREEN, defaultTheme } from "../src/index.js";
+import { ChartSlide, ComparisonSlide, DataTableSlide, MetricCard, MetricGrid, TitleSlide, WIDESCREEN, defaultTheme } from "../src/index.js";
 import { isInsideSlide } from "../src/core/slide.js";
 
 const context = { size: WIDESCREEN, theme: defaultTheme };
@@ -96,5 +96,47 @@ describe("slide components", () => {
   it("rejects unusable comparison point counts", () => {
     expect(() => ComparisonSlide({ title: "Bad", left: { title: "A", points: [] }, right: { title: "B", points: ["ok"] } })(context)).toThrow("left.points");
     expect(() => ComparisonSlide({ title: "Bad", left: { title: "A", points: ["ok"] }, right: { title: "B", points: Array(7).fill("too many") } })(context)).toThrow("right.points");
+  });
+
+  it("builds an editable chart with a narrative panel and notes", () => {
+    const slide = ChartSlide({
+      title: "Revenue",
+      chart: { type: "bar", categories: ["Q1", "Q2"], series: [{ name: "Revenue", values: [8, 10] }], showValues: true, valueFormat: "$0", altText: "Revenue increased." },
+      insight: { title: "Acceleration", summary: "Revenue increased through the period.", points: ["Q2 set a record"] },
+      speakerNotes: "Discuss the exit rate.",
+    })(context);
+    expect(slide.elements.some((element) => element.type === "chart")).toBe(true);
+    expect(slide.speakerNotes).toBe("Discuss the exit rate.");
+    expect(slide.elements.every((element) => isInsideSlide(element, slideBounds))).toBe(true);
+  });
+
+  it("validates chart shape and finite values", () => {
+    const insight = { title: "Why", summary: "Because" };
+    expect(() => ChartSlide({ title: "Bad", chart: { type: "bar", categories: ["Q1"], series: [{ name: "A", values: [1] }], altText: "Bad" }, insight })(context)).toThrow("between 2 and 12");
+    expect(() => ChartSlide({ title: "Bad", chart: { type: "bar", categories: ["Q1", "Q2"], series: [], altText: "Bad" }, insight })(context)).toThrow("between 1 and 3");
+    expect(() => ChartSlide({ title: "Bad", chart: { type: "line", categories: ["Q1", "Q2"], series: [{ name: "A", values: [1] }], altText: "Bad" }, insight })(context)).toThrow("one finite value");
+    expect(() => ChartSlide({ title: "Bad", chart: { type: "line", categories: ["Q1", "Q2"], series: [{ name: "A", values: [1, Number.NaN] }], altText: "Bad" }, insight })(context)).toThrow("one finite value");
+    expect(() => ChartSlide({ title: "Bad", chart: { type: "bar", categories: ["Q1", "Q2"], series: [{ name: "A", values: [1, 2] }], altText: "Bad" }, insight: { ...insight, points: Array(5).fill("Too many") } })(context)).toThrow("up to 4");
+  });
+
+  it("renders editable data rows and all badge variants", () => {
+    const slide = DataTableSlide({
+      title: "Quarterly detail",
+      columns: [{ key: "quarter", label: "Quarter" }, { key: "status", label: "Status", align: "center" }],
+      rows: [
+        { quarter: "Q1", status: { label: "Beat", badge: "solid" } },
+        { quarter: "Q2", status: { label: "Ahead", badge: "muted" } },
+        { quarter: "Q3", status: { label: "On plan", badge: "outline" } },
+      ],
+    })(context);
+    expect(slide.elements.filter((element) => element.type === "text" && ["Beat", "Ahead", "On plan"].includes(element.text))).toHaveLength(3);
+    expect(slide.elements.every((element) => isInsideSlide(element, slideBounds))).toBe(true);
+  });
+
+  it("validates data-table dimensions and unique columns", () => {
+    expect(() => DataTableSlide({ title: "Bad", columns: [{ key: "only", label: "Only" }], rows: [{ only: "A" }] })(context)).toThrow("between 2 and 6");
+    expect(() => DataTableSlide({ title: "Bad", columns: [{ key: "a", label: "A" }, { key: "b", label: "B" }], rows: [] })(context)).toThrow("between 1 and 8");
+    expect(() => DataTableSlide({ title: "Bad", columns: [{ key: "a", label: "A" }, { key: "a", label: "Again" }], rows: [{ a: "A" }] })(context)).toThrow("unique");
+    expect(() => DataTableSlide({ title: "Bad", columns: [{ key: "a", label: "A", width: 0 }, { key: "b", label: "B" }], rows: [{ a: "A", b: "B" }] })(context)).toThrow("positive");
   });
 });
