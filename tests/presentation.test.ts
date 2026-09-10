@@ -32,4 +32,15 @@ describe("presentation", () => {
     expect(deck.warnings).toHaveLength(1);
     expect(deck.toPptxGenJS().layout).toBe("PPTCN_CUSTOM");
   });
+
+  it("creates a browser-compatible Blob without exposing the renderer API", async () => {
+    const deck = createPresentation({ title: "Browser deck" });
+    deck.add(TitleSlide({ title: "Download me" }));
+
+    const blob = await deck.toBlob();
+
+    expect(blob).toBeInstanceOf(Blob);
+    expect(blob.size).toBeGreaterThan(10_000);
+    expect(new Uint8Array(await blob.slice(0, 2).arrayBuffer())).toEqual(new Uint8Array([0x50, 0x4b]));
+  });
 });

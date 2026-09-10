@@ -1,5 +1,3 @@
-import { dirname, resolve } from "node:path";
-import { mkdir } from "node:fs/promises";
 import PptxGenJS from "pptxgenjs";
 import { WIDESCREEN } from "./layout.js";
 import { renderSlide } from "./renderer.js";
@@ -21,6 +19,7 @@ export interface Presentation {
   readonly warnings: readonly LayoutWarning[];
   add(component: SlideComponent | SlideDefinition): Presentation;
   write(fileName: string): Promise<string>;
+  toBlob(): Promise<Blob>;
   toPptxGenJS(): PptxGenJS;
 }
 
@@ -64,9 +63,14 @@ export function createPresentation(options: PresentationOptions = {}): Presentat
       return api;
     },
     async write(fileName) {
+      const { dirname, resolve } = await import("node:path");
+      const { mkdir } = await import("node:fs/promises");
       const outputPath = resolve(fileName);
       await mkdir(dirname(outputPath), { recursive: true });
       return toPptxGenJS().writeFile({ fileName: outputPath, compression: true });
+    },
+    toBlob() {
+      return toPptxGenJS().write({ outputType: "blob" }) as Promise<Blob>;
     },
     toPptxGenJS,
   };
